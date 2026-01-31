@@ -103,7 +103,7 @@ export function CreatePost({ onPostCreated }: CreatePostProps) {
 
     // STEP3: ラベルを数値に変換（行間隔と文字間隔で別々の値）
     const lineSpacingValues: Record<string, number> = {
-      '狭い': 1.2,   // し詰まった行間
+      '狭い': 1.2,   // ��まった行間
       '標準': 1.5,   // 通常の行間
       '広い': 2.0,   // ゆったりした間
     };
@@ -119,7 +119,7 @@ export function CreatePost({ onPostCreated }: CreatePostProps) {
 
     // STEP4: CSS値に変換（文字間隔の差を大きくする）
     const leading = lineValue;
-    const tracking = (letterValue - 1) * 0.2; // 0.1 → 0.2に変更して差を大きく
+    const tracking = (letterValue - 1) * 1.0; // 0.5 → 1.0に変更してさらに差を大きく
 
     // 説明文の生成
     let explanation = `主感情: ${mainEmotion === 'joy' ? '喜び' : '怒り'} (強度: ${strength})\n`;
@@ -265,7 +265,7 @@ export function CreatePost({ onPostCreated }: CreatePostProps) {
                         letterSpacing: `${result.tracking}em`,
                         whiteSpace: 'pre-wrap'
                       }}
-                      className="text-gray-800 text-sm break-words"
+                      className="text-gray-800 text-base lg:text-lg break-words"
                     >
                       {text}
                     </p>
@@ -458,7 +458,7 @@ export function CreatePost({ onPostCreated }: CreatePostProps) {
                             strokeLinecap="round"
                           />
                         )}
-                        {/* 怒り - 0より大きい場合の���表示 */}
+                        {/* 怒り - 0より大��い合の表示 */}
                         {anger > 0 && (
                           <circle
                             cx="60"

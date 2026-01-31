@@ -109,7 +109,7 @@ export function PostCard({ post, showDetails = true }: PostCardProps) {
             <div 
               className="break-words whitespace-pre-wrap text-sm md:text-xl md:font-semibold text-gray-800"
               style={{
-                letterSpacing: `${post.tracking}px`,
+                letterSpacing: `${post.tracking}em`,  // px → em に修正
                 lineHeight: post.leading,
               }}
             >
