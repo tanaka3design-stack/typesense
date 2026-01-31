@@ -34,11 +34,10 @@ function AppContent() {
             <div className="flex items-center justify-between">
               {/* Logo text */}
               <div className="flex items-center gap-2">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-green-400 to-green-500 flex items-center justify-center shadow-[4px_4px_8px_rgba(0,0,0,0.08)]">
-                  <span className="text-white font-bold text-lg">T</span>
-                </div>
-                <span className="text-xl font-bold text-gray-800">TypeSense</span>
-              </div>
+                <span className="text-xl font-bold text-green-600" style={{ 
+              letterSpacing: '0.3em', fontFamily: "'Cormorant', serif"
+               }}>TypeSense</span>
+               </div>
               
               {/* User info and logout */}
               <div className="flex items-center gap-3">
