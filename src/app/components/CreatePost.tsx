@@ -64,7 +64,7 @@ export function CreatePost({ onPostCreated }: CreatePostProps) {
   };
 
   const calculateTypography = (): TypographyResult => {
-    // STEP1: 主感情の決（喜び vs 怒り）
+    // STEP1: 主感情の決定（喜び vs 怒り）
     const mainEmotion = joy >= anger ? 'joy' : 'anger';
     const strength = mainEmotion === 'joy' ? joy : anger;
 
@@ -103,23 +103,30 @@ export function CreatePost({ onPostCreated }: CreatePostProps) {
 
     // STEP3: ラベルを数値に変換（行間隔と文字間隔で別々の値）
     const lineSpacingValues: Record<string, number> = {
-      '狭い': 1.2,   // ��まった行間
-      '標準': 1.5,   // 通常の行間
-      '広い': 2.0,   // ゆったりした間
+      '狭い': 1.5,   // 少し詰まった行間
+      '標準': 1.8,   // 通常の行間
+      '広い': 2.2,   // ゆったりした行間
     };
 
     const letterSpacingValues: Record<string, number> = {
-      '狭い': 0.5,   // より詰まった文字間
-      '標準': 1.0,   // デフォルト
-      '広い': 1.8,   // かなり広い文字間
+      '狭い': -0.08,   // しっかり詰まった文字間
+      '標準': 0,       // デフォルト
+      '広い': 0.15,    // 広い文字間
     };
 
     const lineValue = lineSpacingValues[rule.line];
     const letterValue = letterSpacingValues[rule.letter];
 
-    // STEP4: CSS値に変換（文字間隔の差を大きくする）
+    // STEP4: CSS値に変換
     const leading = lineValue;
-    const tracking = (letterValue - 1) * 1.0; // 0.5 → 1.0に変更してさらに差を大きく
+    const tracking = letterValue;
+
+    // デバッグ用のログ
+    console.log('=== 文字組計算 ===');
+    console.log('主感情:', mainEmotion, '強度:', strength);
+    console.log('ルール:', rule);
+    console.log('行間値:', lineValue, '文字間値:', letterValue);
+    console.log('最終CSS:', 'leading=', leading, 'tracking=', tracking);
 
     // 説明文の生成
     let explanation = `主感情: ${mainEmotion === 'joy' ? '喜び' : '怒り'} (強度: ${strength})\n`;
@@ -224,11 +231,7 @@ export function CreatePost({ onPostCreated }: CreatePostProps) {
   return (
     <div className="min-h-screen bg-white p-4 lg:p-8">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-6 lg:mb-8">
-          <h1 className="text-4xl font-bold text-green-600 mb-2" style={{ letterSpacing: '0.3em', fontFamily: "'Cormorant', serif" }}>
-            TypeSense
-          </h1>
-        </div>
+        {/* タイトルを削除 */}
         
         {/* デスクトップ: 2カラムレイアウト / モバイル: 縦並び */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
@@ -343,7 +346,7 @@ export function CreatePost({ onPostCreated }: CreatePostProps) {
 
               {/* Surprise Slider */}
               <div className="flex items-center gap-4">
-                {/* 驚き顔アイコン（目を見開いている） */}
+                {/* 驚き顔アイコン（目を見開いてる） */}
                 <svg className="w-8 h-8 flex-shrink-0 grayscale opacity-40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="12" cy="12" r="10" />
                   <circle cx="8" cy="10" r="1.5" fill="currentColor" />
@@ -458,7 +461,7 @@ export function CreatePost({ onPostCreated }: CreatePostProps) {
                             strokeLinecap="round"
                           />
                         )}
-                        {/* 怒り - 0より大��い合の表示 */}
+                        {/* 怒り - 0より大きい場合のみ表示 */}
                         {anger > 0 && (
                           <circle
                             cx="60"
