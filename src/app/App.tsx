@@ -6,7 +6,6 @@ import { Button } from '@/app/components/ui/button';
 import { PenSquare, Home, LogOut, User } from 'lucide-react';
 import { Toaster } from '@/app/components/ui/sonner';
 import { UserProvider, useUser } from '@/app/contexts/UserContext';
-import logoImage from 'figma:asset/a5afb829bc7d699627bde9302fdbdcbd06a8e3b3.png';
 
 type Page = 'create' | 'timeline' | 'profile';
 
@@ -33,8 +32,13 @@ function AppContent() {
         <div className="bg-white border-b-0">
           <div className="max-w-6xl mx-auto px-4 py-4">
             <div className="flex items-center justify-between">
-              {/* Logo image */}
-              <img src={logoImage} alt="TypeSense Logo" className="w-12 h-12 object-contain" />
+              {/* Logo text */}
+              <div className="flex items-center gap-2">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-green-400 to-green-500 flex items-center justify-center shadow-[4px_4px_8px_rgba(0,0,0,0.08)]">
+                  <span className="text-white font-bold text-lg">T</span>
+                </div>
+                <span className="text-xl font-bold text-gray-800">TypeSense</span>
+              </div>
               
               {/* User info and logout */}
               <div className="flex items-center gap-3">
