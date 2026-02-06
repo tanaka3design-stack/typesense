@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { Eye, EyeOff } from 'lucide-react';
+import { useUser } from '@/app/contexts/UserContext';
+import { toast } from 'sonner';
+import { supabase, kvStore } from '/utils/supabase/client';
 import { Button } from '@/app/components/ui/button';
 import { Input } from '@/app/components/ui/input';
 import { Label } from '@/app/components/ui/label';
-import { toast } from 'sonner';
-import { supabase, kvStore } from '@/utils/supabase/client';
 
 interface AuthProps {
   onAuthSuccess: (userId: string, name: string, accessToken: string) => void;

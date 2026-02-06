@@ -1,12 +1,12 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { Sparkles, X, Send, Heart, MessageCircle, Smile, Frown, Zap } from 'lucide-react';
+import { Card, CardContent } from '@/app/components/ui/card';
 import { Button } from '@/app/components/ui/button';
 import { Textarea } from '@/app/components/ui/textarea';
-import { Slider } from '@/app/components/ui/slider';
-import { Smile, Zap, Frown, Sparkles, Heart, MessageCircle } from 'lucide-react';
-import { toast } from 'sonner';
 import { useUser } from '@/app/contexts/UserContext';
-import { kvStore } from '@/utils/supabase/client';
+import { kvStore } from '/utils/supabase/client';
 import { TypingLoader } from '@/app/components/TypingLoader';
+import { toast } from 'sonner';
 
 interface TypographyResult {
   leading: number;
@@ -64,7 +64,7 @@ export function CreatePost({ onPostCreated }: CreatePostProps) {
   };
 
   const calculateTypography = (): TypographyResult => {
-    // STEP1: 主感情の決定（喜び vs 怒り）
+    // STEP1: 主感情の決（喜び vs 怒り）
     const mainEmotion = joy >= anger ? 'joy' : 'anger';
     const strength = mainEmotion === 'joy' ? joy : anger;
 
@@ -184,6 +184,16 @@ export function CreatePost({ onPostCreated }: CreatePostProps) {
       return;
     }
 
+    // ✅ バリデーション：正常な範囲内かチェック
+    const isValidTracking = result.tracking >= -0.08 && result.tracking <= 0.15;
+    const isValidLeading = result.leading >= 1.5 && result.leading <= 2.2;
+
+    if (!isValidTracking || !isValidLeading) {
+      console.error('❌ 異常な値を検出:', { tracking: result.tracking, leading: result.leading });
+      toast.error('文字組の値が異常です。再計算してください。');
+      return;
+    }
+
     try {
       // 投稿オブジェクトを作成
       const postId = `post:${Date.now()}:${user.userId}`;
@@ -201,6 +211,7 @@ export function CreatePost({ onPostCreated }: CreatePostProps) {
       };
 
       console.log('💾 Saving post to KV store:', postId);
+      console.log('📊 Values:', { leading: result.leading, tracking: result.tracking });
 
       // KVストアに直接保存
       await kvStore.set(postId, post);
@@ -461,7 +472,7 @@ export function CreatePost({ onPostCreated }: CreatePostProps) {
                             strokeLinecap="round"
                           />
                         )}
-                        {/* 怒り - 0より大きい場合のみ表示 */}
+                        {/* 怒り - 0より大い合の表示 */}
                         {anger > 0 && (
                           <circle
                             cx="60"

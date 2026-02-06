@@ -62,7 +62,7 @@ export function Timeline() {
         }
         
         allPosts = allPosts.filter((post: any) => post.user_id === user.userId);
-        console.log(`✅ Filtered to ${allPosts.length} posts for user ${user.userId}`)
+        console.log(`✅ Filtered to ${allPosts.length} posts for user ${user.userId}`);
       }
 
       // 作成日時の降順でソート

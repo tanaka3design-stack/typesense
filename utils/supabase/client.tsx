@@ -5,8 +5,18 @@ import { projectId, publicAnonKey } from './info';
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || `https://${projectId}.supabase.co`;
 const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || publicAnonKey;
 
-// Supabase クライアントの初期化
-export const supabase = createClient(supabaseUrl, supabaseKey);
+// Supabaseが設定されているかチェック
+export const isSupabaseConfigured = supabaseUrl.startsWith('http') && supabaseKey.length > 20;
+
+// Supabase クライアントの初期化（シングルトン）
+export const supabase = createClient(supabaseUrl, supabaseKey, {
+  auth: {
+    persistSession: true,
+    autoRefreshToken: true,
+    detectSessionInUrl: true,
+    storage: window.localStorage,
+  },
+});
 
 // KVストア操作関数
 export const kvStore = {
